@@ -1,11 +1,5 @@
 import sys, os
-from shutil import copy
-def create_directories(id):
-    os.mkdir(id)
-    os.chdir(id)
-    os.mkdir('templates')
-    os.mkdir('posts')
-    os.mkdir('result')
+from shutil import copytree
 
 def create_weblog():
     id = raw_input('Weblog ID: ')
@@ -13,7 +7,9 @@ def create_weblog():
     welcome = raw_input('Welcome Text: ')
     email = raw_input('Email: ')
     tele = raw_input('Telegram ID: ')
-    create_directories(id)
+    copytree(os.path.dirname(__file__)+'/base_template', 'templates')
+    os.mkdir('posts')
+    os.mkdir('result')
 
 def main(args):
     if len(args) == 2 and args[0] == 'create' and args[1] == 'weblog':
