@@ -1,1 +1,1 @@
-# Flamingo-Practice
+# Practice project for Flamingo
