@@ -1,11 +1,19 @@
 import sys, os
+import xml.etree.ElementTree as ET
 from shutil import copytree
 
-def init_index(data): # TODO
-    pass
-
-def init_about(data): # TODO
-    pass
+def edit_html(data, address):
+    tree = ET.parse(address)
+    root = tree.getroot()
+    for weblog_name in root.iter('weblog-name'):
+        weblog_name.text = data['name']
+    for welcome in root.iter('welcome'):
+        welcome.text = data['welcome']
+    for email in root.iter('email'):
+        email.text = data['email']
+    for tele in root.iter('telegram'):
+        tele.text = data['tele']
+    tree.write(address)
 
 def create_weblog():
     id = raw_input('Weblog ID: ')
@@ -14,11 +22,13 @@ def create_weblog():
     email = raw_input('Email: ')
     tele = raw_input('Telegram ID: ')
     data = {'id': id, 'name': name, 'welcome': welcome, 'email': email, 'tele': tele}
+    os.mkdir(id)
+    os.chdir(id)
     os.mkdir('posts')
     os.mkdir('result')
-    copytree(os.path.dirname(__file__)+'/base_template', 'templates')
-    init_index(data)
-    init_about(data)
+    copytree('../'+os.path.dirname(__file__)+'/base_template', 'templates')
+    edit_html(data, 'templates/index.html')
+    edit_html(data, 'templates/about.html')
 
 def main(args):
     if len(args) == 2 and args[0] == 'create' and args[1] == 'weblog':
