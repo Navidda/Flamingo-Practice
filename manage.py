@@ -22,11 +22,10 @@ def create_weblog():
     email = raw_input('Email: ')
     tele = raw_input('Telegram ID: ')
     data = {'id': id, 'name': name, 'welcome': welcome, 'email': email, 'tele': tele}
-    os.mkdir(id)
+    copytree(os.path.dirname(__file__)+'/base_template', id+'/templates')
     os.chdir(id)
     os.mkdir('posts')
     os.mkdir('result')
-    copytree('../'+os.path.dirname(__file__)+'/base_template', 'templates')
     edit_html(data, 'templates/index.html')
     edit_html(data, 'templates/about.html')
 
