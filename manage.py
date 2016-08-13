@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, json, time
 import xml.etree.ElementTree as ET
 from shutil import copytree
 
@@ -18,20 +18,47 @@ def edit_html(data, address):
 def create_weblog():
     id = raw_input('Weblog ID: ')
     name = raw_input('Weblog Name: ')
-    welcome = raw_input('Welcome Text: ')
+
+    print "Enter Welcome text! finish with a line equal to '_finish'"
+    text = ""
+    while true:
+        line = raw_input()
+        if line == '_finish':
+            break
+        text += line + '\n';
+
     email = raw_input('Email: ')
     tele = raw_input('Telegram ID: ')
     data = {'id': id, 'name': name, 'welcome': welcome, 'email': email, 'tele': tele}
-    copytree(os.path.dirname(__file__)+'/base_template', id+'/templates')
-    os.chdir(id)
+    copytree(os.path.dirname(__file__)+'/base_template', 'templates')
     os.mkdir('posts')
     os.mkdir('result')
     edit_html(data, 'templates/index.html')
     edit_html(data, 'templates/about.html')
 
+def create_post():
+    id = raw_input('Post ID: ')
+    title = raw_input('Title: ')
+
+    print "Enter your post! finish with a line equal to '_finish'"
+    text = ""
+    while True:
+        line = raw_input()
+        if line == '_finish':
+            break
+        text += line + '\n';
+
+    timestring = time.asctime( time.localtime(time.time()) )
+    data = json.dumps([title, text, timestring])
+    fo = open('posts/'+id+'.json', 'w')
+    fo.write(data)
+    fo.close()
+
 def main(args):
     if len(args) == 2 and args[0] == 'create' and args[1] == 'weblog':
         create_weblog()
+    elif len(args) == 2 and args[0] == 'create' and args[1] == 'post':
+        create_post()
     else:
         print 'Invalid arguments'
 if __name__ == '__main__':

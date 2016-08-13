@@ -5,12 +5,11 @@ body {
 aside {
     list-style-type: none;
     margin: 0;
-    padding-top: 100px;
+    padding-top: 8%;
     width: 10%;
     background-color: #f1f1f1;
     position: fixed;
     height: 100%;
-    overflow: auto;
 }
 
 li a {
@@ -23,6 +22,7 @@ li a {
 
 li a.active {
     border-right: 10px solid #bbb;
+    padding-right: 10px;
 }
 
 img {
@@ -33,7 +33,38 @@ img {
 
 div.main {
     margin-left: 12%;
-    padding:1px 1px;
-    width: 85%;
+    padding: 10px;
+    width: 75%;
     position: fixed;
+}
+
+div.posts {
+    color: red;
+    display: block;
+    background-color: #f1f1f1;
+    overflow: auto;
+    padding: 20px;
+    height: 200px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2.post-title {
+    width: 50%;
+    float: left;
+}
+
+div.post-date {
+    float: right;
+    margin-top: 30px;
+}
+
+div.post-text {
+    background-color: #f1f1f1;
+    overflow: auto;
+    padding: 20px;
+    width: 100%;
+    height: 70%;
 }
